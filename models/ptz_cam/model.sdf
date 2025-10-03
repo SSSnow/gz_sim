@@ -1,0 +1,313 @@
+<?xml version="1.0" ?>
+<sdf version="1.10">
+  <model name="ptz_cam">
+    <self_collide>false</self_collide>
+    <static>false</static>
+
+    <link name="ptz_base_link">
+      <pose>0 0 0.05 0 0 0</pose>
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.00563</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00563</iyy>
+          <iyz>0</iyz>
+          <izz>0.0096</izz>
+        </inertia>
+      </inertial>
+      <visual name="base_visual">
+        <geometry>
+          <box>
+            <size>0.24 0.24 0.1</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      <collision name="base_collision">
+        <geometry>
+          <box>
+            <size>0.24 0.24 0.1</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <link name="ptz_yaw_link">
+      <pose>0 0 0.13 0 0 0</pose>
+      <inertial>
+        <mass>0.3</mass>
+        <inertia>
+          <ixx>0.00139</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00139</iyy>
+          <iyz>0</iyz>
+          <izz>0.0015</izz>
+        </inertia>
+      </inertial>
+      <visual name="yaw_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.16</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>1 0 0 1</ambient>
+          <diffuse>1 0 0 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      <collision name="yaw_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.1</radius>
+            <length>0.16</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="ptz_yaw_joint" type="revolute">
+      <parent>ptz_base_link</parent>
+      <child>ptz_yaw_link</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e16</lower>
+          <upper>1e16</upper>
+          <effort>50</effort>
+          <velocity>-1</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.05</damping>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <implicit_spring_damper>1</implicit_spring_damper>
+          <limit>
+            <cfm>0.1</cfm>
+            <erp>0.2</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+
+    <link name="ptz_pitch_link">
+      <pose>0 0 0.31 0 0 0</pose>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.00288</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00288</iyy>
+          <iyz>0</iyz>
+          <izz>0.00288</izz>
+        </inertia>
+      </inertial>
+      <visual name="pitch_visual">
+        <geometry>
+          <sphere>
+            <radius>0.12</radius>   
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>1 1 1 1</ambient>  
+          <diffuse>1 1 1 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      <collision name="pitch_collision">
+        <geometry>
+          <sphere>
+            <radius>0.12</radius>
+          </sphere>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="ptz_pitch_joint" type="revolute">
+      <parent>ptz_yaw_link</parent>
+      <child>ptz_pitch_link</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.5708</lower>     <!-- -90° -->
+          <upper>0.436332</upper>    <!-- +25° -->
+          <effort>50</effort>
+          <velocity>1.0</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.1</damping>
+        </dynamics>
+      </axis>
+      <physics>
+        <ode>
+          <implicit_spring_damper>1</implicit_spring_damper>
+          <limit>
+            <cfm>0.1</cfm>
+            <erp>0.2</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+
+    <link name="ptz_camera_link">
+      <pose>0.12 0 0.31 0 1.5708 0</pose>
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>2.3333e-06</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.3333e-06</iyy>
+          <iyz>0</iyz>
+          <izz>2.0e-06</izz>
+        </inertia>
+      </inertial>
+      <visual name="camera_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>   
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.2 0.2 0.2 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      <collision name="mount_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.02</radius>
+            <length>0.04</length>
+          </cylinder>
+        </geometry>
+      </collision>
+
+      <sensor name="camera_imu" type="imu">
+        <always_on>1</always_on>
+        <update_rate>250</update_rate>
+        <pose>0.12 0 0.31 0 0 0</pose>
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00018665</stddev>
+                <dynamic_bias_stddev>3.8785e-05</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>1000</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0</mean>
+                <stddev>0.00186</stddev>
+                <dynamic_bias_stddev>0.006</dynamic_bias_stddev>
+                <dynamic_bias_correlation_time>300</dynamic_bias_correlation_time>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
+        <topic>camera_imu</topic>
+      </sensor>
+
+      <sensor name="camera" type="camera">
+        <pose>0.14 0 0.31 0 -1.5708 0</pose>
+        <camera>
+          <horizontal_fov>1.74</horizontal_fov>
+          <image>
+            <width>1280</width>
+            <height>720</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>1000</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <visualize>true</visualize>
+        <topic>camera</topic>
+      </sensor>
+    </link>
+
+    <joint name="mount_joint" type="fixed">
+      <parent>ptz_pitch_link</parent>
+      <child>ptz_camera_link</child>
+    </joint>
+
+     <!-- Plugins for joint control -->
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>ptz_yaw_joint</joint_name>
+      <sub_topic>command/ptz_yaw</sub_topic>
+      <p_gain>0.3</p_gain>
+      <i_gain>0.012</i_gain>
+      <d_gain>0.015</d_gain>
+      <i_max>0</i_max>
+      <i_min>0</i_min>
+      <cmd_max>0.3</cmd_max>
+      <cmd_min>-0.3</cmd_min>
+    </plugin>
+
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>ptz_pitch_joint</joint_name>
+      <sub_topic>command/ptz_pitch</sub_topic>
+      <p_gain>0.8</p_gain>
+      <i_gain>0.012</i_gain>
+      <d_gain>0.015</d_gain>
+      <i_max>0</i_max>
+      <i_min>0</i_min>
+      <cmd_max>1</cmd_max>
+      <cmd_min>-1</cmd_min>
+    </plugin>
+
+  </model>
+</sdf>
