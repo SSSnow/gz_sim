@@ -442,5 +442,77 @@
       </joint> -->
     <!-- </model> -->
 
+    <model name="airship_1">
+	    <pose>10 10 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_2">
+	    <pose>10 -10 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_3">
+	    <pose>-10 -10 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_4">
+	    <pose>-10 10 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_5">
+	    <pose>3 3 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_6">
+	    <pose>3 -3 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_7">
+	    <pose>-3 -3 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_8">
+	    <pose>-3 3 0 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
+    <model name="airship_9">
+	    <pose>-0 0 5 0 0 0</pose>
+      <static>true</static>
+      <include merge="true">
+        <uri>model://airship</uri>
+      </include>
+    </model>
+
   </world>
 </sdf>
